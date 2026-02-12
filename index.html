@@ -236,18 +236,18 @@ body {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding: 40px;
-  gap: 24px;
+  padding: 24px;
+  gap: 16px;
   overflow-y: auto;
 }
 
 /* ── Phone mockup ── */
 .phone {
-  width: 280px;
-  height: 560px;
+  width: 364px;
+  height: 728px;
   background: #000;
-  border-radius: 40px;
-  padding: 12px;
+  border-radius: 52px;
+  padding: 14px;
   position: relative;
   box-shadow:
     0 0 0 1px #333,
@@ -258,7 +258,7 @@ body {
   width: 100%;
   height: 100%;
   background: #ffffff;
-  border-radius: 30px;
+  border-radius: 40px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -270,11 +270,11 @@ body {
 .phone-screen::before {
   content: '';
   position: absolute;
-  top: 10px;
+  top: 12px;
   left: 50%;
   transform: translateX(-50%);
-  width: 80px;
-  height: 24px;
+  width: 100px;
+  height: 28px;
   background: #000;
   border-radius: 12px;
   z-index: 10;
@@ -287,6 +287,7 @@ body {
   justify-content: center;
   width: 100%;
   height: 100%;
+  transform: scale(0.7);
 }
 
 .loader {
@@ -559,6 +560,196 @@ body {
 .toggle-code:hover {
   color: #888;
 }
+
+/* ── Mode toggle ── */
+.mode-toggle {
+  display: flex;
+  background: #141414;
+  border: 1px solid #222;
+  border-radius: 8px;
+  overflow: hidden;
+  align-self: center;
+}
+
+.mode-btn {
+  padding: 8px 18px;
+  background: none;
+  border: none;
+  color: #555;
+  font-family: 'Inter', sans-serif;
+  font-size: 12px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.mode-btn:first-child {
+  border-right: 1px solid #222;
+}
+
+.mode-btn:hover {
+  color: #999;
+}
+
+.mode-btn.active {
+  background: #1e1e1e;
+  color: #fff;
+}
+
+/* ── Contextual mode ── */
+.phone-screen.contextual .loader-container {
+  display: none;
+}
+
+.contextual-ui {
+  display: none;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+  padding: 56px 20px 20px;
+  overflow: hidden;
+}
+
+.phone-screen.contextual .contextual-ui {
+  display: flex;
+  animation: loaderFadeIn 0.3s ease;
+}
+
+.ctx-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 16px;
+}
+
+.ctx-title {
+  font-size: 16px;
+  font-weight: 600;
+  color: #111;
+}
+
+.ctx-avatar {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: #e8e8e8;
+}
+
+.ctx-card {
+  background: #f5f5f5;
+  border-radius: 14px;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.ctx-card-title {
+  font-size: 13px;
+  font-weight: 600;
+  color: #333;
+}
+
+.ctx-card-subtitle {
+  font-size: 11px;
+  color: #999;
+  line-height: 1.4;
+}
+
+.ctx-loader-area {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 64px;
+}
+
+.ctx-loader-area > * {
+  transform: scale(0.55);
+  transform-origin: center;
+}
+
+.ctx-skeleton {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-top: 16px;
+}
+
+.ctx-skeleton-line {
+  height: 10px;
+  background: #ebebeb;
+  border-radius: 5px;
+}
+
+.ctx-skeleton-line:nth-child(1) { width: 100%; }
+.ctx-skeleton-line:nth-child(2) { width: 85%; }
+.ctx-skeleton-line:nth-child(3) { width: 60%; }
+
+.ctx-bottom-bar {
+  margin-top: auto;
+  display: flex;
+  justify-content: space-around;
+  padding: 10px 0 4px;
+  border-top: 1px solid #eee;
+}
+
+.ctx-tab {
+  width: 20px;
+  height: 20px;
+  border-radius: 4px;
+  background: #ddd;
+}
+
+.ctx-tab:nth-child(2) {
+  background: #333;
+}
+
+/* ── Controls row ── */
+.controls-row {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.color-swatches {
+  display: flex;
+  gap: 6px;
+  align-items: center;
+}
+
+.color-swatch {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  border: 2px solid transparent;
+  cursor: pointer;
+  transition: border-color 0.15s, transform 0.15s;
+  position: relative;
+}
+
+.color-swatch:hover {
+  transform: scale(1.1);
+}
+
+.color-swatch.active {
+  border-color: #fff;
+}
+
+.color-swatch::after {
+  content: '';
+  position: absolute;
+  inset: -1px;
+  border-radius: 50%;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.controls-label {
+  font-size: 11px;
+  color: #444;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  font-weight: 500;
+}
 </style>
 </head>
 <body>
@@ -627,6 +818,21 @@ body {
 </aside>
 
 <main class="main">
+  <div class="controls-row">
+    <div class="mode-toggle">
+      <button class="mode-btn active" data-mode="fullscreen">Fullscreen</button>
+      <button class="mode-btn" data-mode="contextual">Contextual</button>
+    </div>
+    <span class="controls-label">Theme</span>
+    <div class="color-swatches">
+      <div class="color-swatch active" data-bg="#ffffff" data-fg="#333333" title="Light" style="background:#ffffff"></div>
+      <div class="color-swatch" data-bg="#f5f5f5" data-fg="#444444" title="Soft Gray" style="background:#f5f5f5"></div>
+      <div class="color-swatch" data-bg="#1c1c1e" data-fg="#ffffff" title="Dark" style="background:#1c1c1e"></div>
+      <div class="color-swatch" data-bg="#000000" data-fg="#ffffff" title="Black" style="background:#000000"></div>
+      <div class="color-swatch" data-bg="#0a1628" data-fg="#6eb5ff" title="Navy" style="background:#0a1628"></div>
+      <div class="color-swatch" data-bg="#fef7ed" data-fg="#8b5e34" title="Warm" style="background:#fef7ed"></div>
+    </div>
+  </div>
   <div class="phone">
     <div class="phone-screen">
       <div class="loader-container">
@@ -658,6 +864,28 @@ body {
         </div>
         <div class="loader" id="loader-rotating-square">
           <div class="rotating-square"></div>
+        </div>
+      </div>
+      <div class="contextual-ui">
+        <div class="ctx-header">
+          <div class="ctx-title">Explore</div>
+          <div class="ctx-avatar"></div>
+        </div>
+        <div class="ctx-card">
+          <div class="ctx-card-title">Loading content...</div>
+          <div class="ctx-card-subtitle">Fetching your personalized feed</div>
+          <div class="ctx-loader-area" id="ctxLoaderArea"></div>
+        </div>
+        <div class="ctx-skeleton">
+          <div class="ctx-skeleton-line"></div>
+          <div class="ctx-skeleton-line"></div>
+          <div class="ctx-skeleton-line"></div>
+        </div>
+        <div class="ctx-bottom-bar">
+          <div class="ctx-tab"></div>
+          <div class="ctx-tab"></div>
+          <div class="ctx-tab"></div>
+          <div class="ctx-tab"></div>
         </div>
       </div>
     </div>
@@ -982,6 +1210,7 @@ export default RotatingSquare;`,
 
 // ── State ──
 let activeLoader = 'pulsing-dots';
+let activeMode = 'fullscreen';
 let codeVisible = false;
 
 // ── DOM refs ──
@@ -1006,10 +1235,119 @@ items.forEach(item => {
     document.getElementById('loader-' + id).classList.add('active');
 
     activeLoader = id;
+    if (activeMode === 'contextual') updateCtxLoader();
     updateCodePreview();
     resetCopyBtn();
   });
 });
+
+// ── Mode toggle ──
+const modeBtns = document.querySelectorAll('.mode-btn');
+const phoneScreen = document.querySelector('.phone-screen');
+const ctxLoaderArea = document.getElementById('ctxLoaderArea');
+
+modeBtns.forEach(btn => {
+  btn.addEventListener('click', () => {
+    const mode = btn.dataset.mode;
+    if (mode === activeMode) return;
+    modeBtns.forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    activeMode = mode;
+    if (mode === 'contextual') {
+      phoneScreen.classList.add('contextual');
+      updateCtxLoader();
+    } else {
+      phoneScreen.classList.remove('contextual');
+    }
+  });
+});
+
+// ── Color swatches ──
+const swatches = document.querySelectorAll('.color-swatch');
+let activeBg = '#ffffff';
+let activeFg = '#333333';
+
+swatches.forEach(swatch => {
+  swatch.addEventListener('click', () => {
+    swatches.forEach(s => s.classList.remove('active'));
+    swatch.classList.add('active');
+    activeBg = swatch.dataset.bg;
+    activeFg = swatch.dataset.fg;
+    applyTheme();
+  });
+});
+
+function applyTheme() {
+  phoneScreen.style.background = activeBg;
+  // Recolor all loader elements inside the phone
+  const targets = phoneScreen.querySelectorAll(
+    '.pulsing-dots span, .orbiting-center, .orbiting-dot, .circular-loader, .bouncing-dots span, .spinner-ring, .breathing-circle, .wave-bars span, .rotating-square'
+  );
+  targets.forEach(el => {
+    if (el.classList.contains('circular-loader')) {
+      el.style.borderTopColor = activeFg;
+      // Keep the track lighter
+      const isDark = isColorDark(activeBg);
+      el.style.borderColor = isDark ? 'rgba(255,255,255,0.15)' : '#e0e0e0';
+      el.style.borderTopColor = activeFg;
+    } else if (el.classList.contains('spinner-ring')) {
+      el.style.borderTopColor = activeFg;
+      el.style.borderRightColor = activeFg;
+      el.style.borderBottomColor = activeFg;
+    } else {
+      el.style.background = activeFg;
+    }
+  });
+  // Contextual UI colors
+  const isDark = isColorDark(activeBg);
+  document.querySelectorAll('.ctx-title').forEach(el => el.style.color = isDark ? '#eee' : '#111');
+  document.querySelectorAll('.ctx-card').forEach(el => el.style.background = isDark ? 'rgba(255,255,255,0.08)' : '#f5f5f5');
+  document.querySelectorAll('.ctx-card-title').forEach(el => el.style.color = isDark ? '#ddd' : '#333');
+  document.querySelectorAll('.ctx-card-subtitle').forEach(el => el.style.color = isDark ? '#777' : '#999');
+  document.querySelectorAll('.ctx-skeleton-line').forEach(el => el.style.background = isDark ? 'rgba(255,255,255,0.06)' : '#ebebeb');
+  document.querySelectorAll('.ctx-tab').forEach(el => el.style.background = isDark ? 'rgba(255,255,255,0.1)' : '#ddd');
+  document.querySelectorAll('.ctx-avatar').forEach(el => el.style.background = isDark ? 'rgba(255,255,255,0.1)' : '#e8e8e8');
+  document.querySelectorAll('.ctx-bottom-bar').forEach(el => el.style.borderTopColor = isDark ? 'rgba(255,255,255,0.08)' : '#eee');
+  // Recolor ctx loader area clones too
+  if (activeMode === 'contextual') updateCtxLoader();
+}
+
+function isColorDark(hex) {
+  const r = parseInt(hex.slice(1,3), 16);
+  const g = parseInt(hex.slice(3,5), 16);
+  const b = parseInt(hex.slice(5,7), 16);
+  return (r * 299 + g * 587 + b * 114) / 1000 < 128;
+}
+
+function updateCtxLoader() {
+  ctxLoaderArea.innerHTML = '';
+  const src = document.querySelector('#loader-' + activeLoader + ' > *');
+  if (src) {
+    const clone = src.cloneNode(true);
+    ctxLoaderArea.appendChild(clone);
+    // Apply current theme colors to the clone
+    recolorElement(ctxLoaderArea);
+  }
+}
+
+function recolorElement(root) {
+  const targets = root.querySelectorAll(
+    '.pulsing-dots span, .orbiting-center, .orbiting-dot, .circular-loader, .bouncing-dots span, .spinner-ring, .breathing-circle, .wave-bars span, .rotating-square'
+  );
+  targets.forEach(el => {
+    if (el.classList.contains('circular-loader')) {
+      const isDark = isColorDark(activeBg);
+      el.style.borderColor = isDark ? 'rgba(255,255,255,0.15)' : '#e0e0e0';
+      el.style.borderTopColor = activeFg;
+    } else if (el.classList.contains('spinner-ring')) {
+      el.style.borderTopColor = activeFg;
+      el.style.borderRightColor = activeFg;
+      el.style.borderBottomColor = activeFg;
+    } else {
+      el.style.background = activeFg;
+    }
+  });
+}
 
 // ── Code preview ──
 function updateCodePreview() {
