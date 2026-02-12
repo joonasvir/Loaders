@@ -479,28 +479,33 @@ body {
   100% { transform: rotate(360deg); border-radius: 6px; }
 }
 
-/* ── Code panel ── */
+/* ── Code panel (bottom-right) ── */
 .code-panel {
-  width: 100%;
-  max-width: 520px;
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  z-index: 100;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 8px;
 }
 
 .copy-btn {
   display: flex;
   align-items: center;
-  justify-content: center;
-  gap: 8px;
-  padding: 10px 20px;
+  gap: 6px;
+  padding: 8px 14px;
   background: #1a1a1a;
-  color: #ccc;
+  color: #888;
   border: 1px solid #333;
   border-radius: 8px;
   font-family: 'Inter', sans-serif;
-  font-size: 13px;
+  font-size: 11px;
   font-weight: 500;
   cursor: pointer;
   transition: all 0.15s;
-  width: 100%;
+  white-space: nowrap;
 }
 
 .copy-btn:hover {
@@ -516,17 +521,17 @@ body {
 }
 
 .copy-btn svg {
-  width: 16px;
-  height: 16px;
+  width: 14px;
+  height: 14px;
 }
 
 .code-preview {
-  margin-top: 12px;
   background: #141414;
   border: 1px solid #222;
   border-radius: 8px;
-  padding: 16px;
-  max-height: 240px;
+  padding: 14px;
+  max-height: 220px;
+  max-width: 380px;
   overflow-y: auto;
   display: none;
 }
@@ -538,8 +543,8 @@ body {
 
 .code-preview pre {
   font-family: 'SF Mono', 'Fira Code', 'Cascadia Code', monospace;
-  font-size: 11px;
-  line-height: 1.6;
+  font-size: 10px;
+  line-height: 1.5;
   color: #a0a0a0;
   white-space: pre;
   overflow-x: auto;
@@ -550,10 +555,9 @@ body {
   border: none;
   color: #555;
   font-family: 'Inter', sans-serif;
-  font-size: 12px;
+  font-size: 11px;
   cursor: pointer;
-  padding: 6px 0;
-  margin-top: 6px;
+  padding: 4px 0;
   transition: color 0.15s;
 }
 
@@ -704,13 +708,6 @@ body {
   background: #333;
 }
 
-/* ── Controls row ── */
-.controls-row {
-  display: flex;
-  align-items: center;
-  gap: 16px;
-}
-
 .color-swatches {
   display: flex;
   gap: 6px;
@@ -749,6 +746,271 @@ body {
   text-transform: uppercase;
   letter-spacing: 0.06em;
   font-weight: 500;
+}
+
+.theme-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+/* ── Shimmer base ── */
+@keyframes shimmerSweep {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+
+.shimmer-bone {
+  background: linear-gradient(90deg, #e8e8e8 25%, #f5f5f5 50%, #e8e8e8 75%);
+  background-size: 200% 100%;
+  animation: shimmerSweep 1.5s ease-in-out infinite;
+  border-radius: 6px;
+}
+
+/* Override container when a shimmer is active */
+.loader-container:has(.shimmer-type.active) {
+  transform: none;
+  padding: 56px 20px 20px;
+  align-items: stretch;
+}
+
+.shimmer-type {
+  flex-direction: column;
+  width: 100%;
+}
+
+/* ── Shimmer: Card ── */
+.shimmer-card-layout {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  width: 100%;
+}
+.shimmer-card-image {
+  width: 100%;
+  height: 140px;
+  border-radius: 12px;
+}
+.shimmer-card-line1 {
+  width: 70%;
+  height: 14px;
+}
+.shimmer-card-line2 {
+  width: 50%;
+  height: 10px;
+}
+.shimmer-card-actions {
+  display: flex;
+  gap: 10px;
+  margin-top: 4px;
+}
+.shimmer-card-btn {
+  width: 60px;
+  height: 28px;
+  border-radius: 14px;
+}
+
+/* ── Shimmer: Text Block ── */
+.shimmer-text-layout {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  width: 100%;
+}
+.shimmer-text-title {
+  width: 55%;
+  height: 16px;
+  border-radius: 4px;
+  margin-bottom: 4px;
+}
+.shimmer-text-line {
+  height: 11px;
+  border-radius: 4px;
+}
+.shimmer-text-line:nth-child(2) { width: 100%; }
+.shimmer-text-line:nth-child(3) { width: 95%; }
+.shimmer-text-line:nth-child(4) { width: 88%; }
+.shimmer-text-line:nth-child(5) { width: 100%; }
+.shimmer-text-line:nth-child(6) { width: 72%; }
+
+/* ── Shimmer: Profile ── */
+.shimmer-profile-layout {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+  width: 100%;
+}
+.shimmer-profile-avatar {
+  width: 72px;
+  height: 72px;
+  border-radius: 50%;
+}
+.shimmer-profile-name {
+  width: 120px;
+  height: 16px;
+  border-radius: 4px;
+}
+.shimmer-profile-bio {
+  height: 10px;
+  border-radius: 4px;
+}
+.shimmer-profile-bio:nth-child(3) { width: 180px; }
+.shimmer-profile-bio:nth-child(4) { width: 140px; }
+.shimmer-profile-stats {
+  display: flex;
+  gap: 24px;
+  margin-top: 4px;
+}
+.shimmer-profile-stat {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+}
+.shimmer-profile-stat-num {
+  width: 36px;
+  height: 14px;
+  border-radius: 4px;
+}
+.shimmer-profile-stat-label {
+  width: 48px;
+  height: 9px;
+  border-radius: 4px;
+}
+
+/* ── Shimmer: Feed List ── */
+.shimmer-feed-layout {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  width: 100%;
+}
+.shimmer-feed-item {
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+}
+.shimmer-feed-avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+.shimmer-feed-lines {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding-top: 2px;
+}
+.shimmer-feed-line1 {
+  width: 75%;
+  height: 12px;
+  border-radius: 4px;
+}
+.shimmer-feed-line2 {
+  width: 55%;
+  height: 10px;
+  border-radius: 4px;
+}
+.shimmer-feed-divider {
+  height: 1px;
+  background: #f0f0f0;
+  width: 100%;
+}
+
+/* ── Mini shimmer preview ── */
+.mini-shimmer {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  width: 18px;
+}
+.mini-shimmer span {
+  height: 2px;
+  border-radius: 1px;
+  background: linear-gradient(90deg, #555 25%, #777 50%, #555 75%);
+  background-size: 200% 100%;
+  animation: shimmerSweep 1.5s ease-in-out infinite;
+}
+.mini-shimmer span:nth-child(1) { width: 100%; }
+.mini-shimmer span:nth-child(2) { width: 80%; }
+.mini-shimmer span:nth-child(3) { width: 60%; }
+
+.mini-shimmer-card {
+  width: 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+.mini-shimmer-card-img {
+  width: 100%;
+  height: 8px;
+  border-radius: 2px;
+  background: linear-gradient(90deg, #555 25%, #777 50%, #555 75%);
+  background-size: 200% 100%;
+  animation: shimmerSweep 1.5s ease-in-out infinite;
+}
+.mini-shimmer-card-line {
+  height: 2px;
+  border-radius: 1px;
+  background: linear-gradient(90deg, #555 25%, #777 50%, #555 75%);
+  background-size: 200% 100%;
+  animation: shimmerSweep 1.5s ease-in-out infinite;
+}
+.mini-shimmer-card-line:nth-child(2) { width: 75%; }
+.mini-shimmer-card-line:nth-child(3) { width: 50%; }
+
+.mini-shimmer-profile {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+}
+.mini-shimmer-profile-circle {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: linear-gradient(90deg, #555 25%, #777 50%, #555 75%);
+  background-size: 200% 100%;
+  animation: shimmerSweep 1.5s ease-in-out infinite;
+}
+.mini-shimmer-profile-line {
+  width: 14px;
+  height: 2px;
+  border-radius: 1px;
+  background: linear-gradient(90deg, #555 25%, #777 50%, #555 75%);
+  background-size: 200% 100%;
+  animation: shimmerSweep 1.5s ease-in-out infinite;
+}
+
+.mini-shimmer-feed {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+.mini-shimmer-feed-row {
+  display: flex;
+  gap: 2px;
+  align-items: center;
+}
+.mini-shimmer-feed-dot {
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: linear-gradient(90deg, #555 25%, #777 50%, #555 75%);
+  background-size: 200% 100%;
+  animation: shimmerSweep 1.5s ease-in-out infinite;
+  flex-shrink: 0;
+}
+.mini-shimmer-feed-bar {
+  width: 12px;
+  height: 2px;
+  border-radius: 1px;
+  background: linear-gradient(90deg, #555 25%, #777 50%, #555 75%);
+  background-size: 200% 100%;
+  animation: shimmerSweep 1.5s ease-in-out infinite;
 }
 </style>
 </head>
@@ -815,23 +1077,53 @@ body {
       Rotating Square
     </div>
   </div>
+
+  <div class="sidebar-section">
+    <div class="sidebar-label">Shimmers</div>
+    <div class="sidebar-item" data-loader="shimmer-card">
+      <div class="sidebar-preview">
+        <div class="mini-shimmer-card">
+          <div class="mini-shimmer-card-img"></div>
+          <div class="mini-shimmer-card-line"></div>
+          <div class="mini-shimmer-card-line"></div>
+        </div>
+      </div>
+      Card
+    </div>
+    <div class="sidebar-item" data-loader="shimmer-text">
+      <div class="sidebar-preview">
+        <div class="mini-shimmer">
+          <span></span><span></span><span></span>
+        </div>
+      </div>
+      Text Block
+    </div>
+    <div class="sidebar-item" data-loader="shimmer-profile">
+      <div class="sidebar-preview">
+        <div class="mini-shimmer-profile">
+          <div class="mini-shimmer-profile-circle"></div>
+          <div class="mini-shimmer-profile-line"></div>
+        </div>
+      </div>
+      Profile
+    </div>
+    <div class="sidebar-item" data-loader="shimmer-feed">
+      <div class="sidebar-preview">
+        <div class="mini-shimmer-feed">
+          <div class="mini-shimmer-feed-row"><div class="mini-shimmer-feed-dot"></div><div class="mini-shimmer-feed-bar"></div></div>
+          <div class="mini-shimmer-feed-row"><div class="mini-shimmer-feed-dot"></div><div class="mini-shimmer-feed-bar"></div></div>
+          <div class="mini-shimmer-feed-row"><div class="mini-shimmer-feed-dot"></div><div class="mini-shimmer-feed-bar"></div></div>
+        </div>
+      </div>
+      Feed List
+    </div>
+  </div>
 </aside>
 
 <main class="main">
-  <div class="controls-row">
-    <div class="mode-toggle">
-      <button class="mode-btn active" data-mode="fullscreen">Fullscreen</button>
-      <button class="mode-btn" data-mode="contextual">Contextual</button>
-    </div>
-    <span class="controls-label">Theme</span>
-    <div class="color-swatches">
-      <div class="color-swatch active" data-bg="#ffffff" data-fg="#333333" title="Light" style="background:#ffffff"></div>
-      <div class="color-swatch" data-bg="#f5f5f5" data-fg="#444444" title="Soft Gray" style="background:#f5f5f5"></div>
-      <div class="color-swatch" data-bg="#1c1c1e" data-fg="#ffffff" title="Dark" style="background:#1c1c1e"></div>
-      <div class="color-swatch" data-bg="#000000" data-fg="#ffffff" title="Black" style="background:#000000"></div>
-      <div class="color-swatch" data-bg="#0a1628" data-fg="#6eb5ff" title="Navy" style="background:#0a1628"></div>
-      <div class="color-swatch" data-bg="#fef7ed" data-fg="#8b5e34" title="Warm" style="background:#fef7ed"></div>
-    </div>
+  <div class="mode-toggle">
+    <button class="mode-btn active" data-mode="fullscreen">Fullscreen</button>
+    <button class="mode-btn" data-mode="contextual">Contextual</button>
   </div>
   <div class="phone">
     <div class="phone-screen">
@@ -865,6 +1157,84 @@ body {
         <div class="loader" id="loader-rotating-square">
           <div class="rotating-square"></div>
         </div>
+        <div class="loader shimmer-type" id="loader-shimmer-card">
+          <div class="shimmer-card-layout">
+            <div class="shimmer-bone shimmer-card-image"></div>
+            <div class="shimmer-bone shimmer-card-line1"></div>
+            <div class="shimmer-bone shimmer-card-line2"></div>
+            <div class="shimmer-card-actions">
+              <div class="shimmer-bone shimmer-card-btn"></div>
+              <div class="shimmer-bone shimmer-card-btn"></div>
+            </div>
+          </div>
+        </div>
+        <div class="loader shimmer-type" id="loader-shimmer-text">
+          <div class="shimmer-text-layout">
+            <div class="shimmer-bone shimmer-text-title"></div>
+            <div class="shimmer-bone shimmer-text-line"></div>
+            <div class="shimmer-bone shimmer-text-line"></div>
+            <div class="shimmer-bone shimmer-text-line"></div>
+            <div class="shimmer-bone shimmer-text-line"></div>
+            <div class="shimmer-bone shimmer-text-line"></div>
+          </div>
+        </div>
+        <div class="loader shimmer-type" id="loader-shimmer-profile">
+          <div class="shimmer-profile-layout">
+            <div class="shimmer-bone shimmer-profile-avatar"></div>
+            <div class="shimmer-bone shimmer-profile-name"></div>
+            <div class="shimmer-bone shimmer-profile-bio"></div>
+            <div class="shimmer-bone shimmer-profile-bio"></div>
+            <div class="shimmer-profile-stats">
+              <div class="shimmer-profile-stat">
+                <div class="shimmer-bone shimmer-profile-stat-num"></div>
+                <div class="shimmer-bone shimmer-profile-stat-label"></div>
+              </div>
+              <div class="shimmer-profile-stat">
+                <div class="shimmer-bone shimmer-profile-stat-num"></div>
+                <div class="shimmer-bone shimmer-profile-stat-label"></div>
+              </div>
+              <div class="shimmer-profile-stat">
+                <div class="shimmer-bone shimmer-profile-stat-num"></div>
+                <div class="shimmer-bone shimmer-profile-stat-label"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="loader shimmer-type" id="loader-shimmer-feed">
+          <div class="shimmer-feed-layout">
+            <div class="shimmer-feed-item">
+              <div class="shimmer-bone shimmer-feed-avatar"></div>
+              <div class="shimmer-feed-lines">
+                <div class="shimmer-bone shimmer-feed-line1"></div>
+                <div class="shimmer-bone shimmer-feed-line2"></div>
+              </div>
+            </div>
+            <div class="shimmer-feed-divider"></div>
+            <div class="shimmer-feed-item">
+              <div class="shimmer-bone shimmer-feed-avatar"></div>
+              <div class="shimmer-feed-lines">
+                <div class="shimmer-bone shimmer-feed-line1"></div>
+                <div class="shimmer-bone shimmer-feed-line2"></div>
+              </div>
+            </div>
+            <div class="shimmer-feed-divider"></div>
+            <div class="shimmer-feed-item">
+              <div class="shimmer-bone shimmer-feed-avatar"></div>
+              <div class="shimmer-feed-lines">
+                <div class="shimmer-bone shimmer-feed-line1"></div>
+                <div class="shimmer-bone shimmer-feed-line2"></div>
+              </div>
+            </div>
+            <div class="shimmer-feed-divider"></div>
+            <div class="shimmer-feed-item">
+              <div class="shimmer-bone shimmer-feed-avatar"></div>
+              <div class="shimmer-feed-lines">
+                <div class="shimmer-bone shimmer-feed-line1"></div>
+                <div class="shimmer-bone shimmer-feed-line2"></div>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
       <div class="contextual-ui">
         <div class="ctx-header">
@@ -891,20 +1261,32 @@ body {
     </div>
   </div>
 
-  <div class="code-panel">
-    <button class="copy-btn" id="copyBtn">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-        <rect x="9" y="9" width="13" height="13" rx="2" ry="2"/>
-        <path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/>
-      </svg>
-      <span id="copyLabel">Copy React Native Code</span>
-    </button>
-    <button class="toggle-code" id="toggleCode">Show code preview</button>
-    <div class="code-preview" id="codePreview">
-      <pre id="codeContent"></pre>
+  <div class="theme-row">
+    <span class="controls-label">Theme</span>
+    <div class="color-swatches">
+      <div class="color-swatch active" data-bg="#ffffff" data-fg="#333333" title="Light" style="background:#ffffff"></div>
+      <div class="color-swatch" data-bg="#f5f5f5" data-fg="#444444" title="Soft Gray" style="background:#f5f5f5"></div>
+      <div class="color-swatch" data-bg="#1c1c1e" data-fg="#ffffff" title="Dark" style="background:#1c1c1e"></div>
+      <div class="color-swatch" data-bg="#000000" data-fg="#ffffff" title="Black" style="background:#000000"></div>
+      <div class="color-swatch" data-bg="#0a1628" data-fg="#6eb5ff" title="Navy" style="background:#0a1628"></div>
+      <div class="color-swatch" data-bg="#fef7ed" data-fg="#8b5e34" title="Warm" style="background:#fef7ed"></div>
     </div>
   </div>
 </main>
+
+<div class="code-panel">
+  <button class="copy-btn" id="copyBtn">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <rect x="9" y="9" width="13" height="13" rx="2" ry="2"/>
+      <path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/>
+    </svg>
+    <span id="copyLabel">Copy RN Code</span>
+  </button>
+  <button class="toggle-code" id="toggleCode">Show code</button>
+  <div class="code-preview" id="codePreview">
+    <pre id="codeContent"></pre>
+  </div>
+</div>
 
 <script>
 const rnCode = {
@@ -1206,6 +1588,236 @@ const styles = StyleSheet.create({
 });
 
 export default RotatingSquare;`,
+
+  'shimmer-card': `import React, { useEffect, useRef } from 'react';
+import { View, Animated, StyleSheet, Easing } from 'react-native';
+
+const ShimmerBone = ({ style }) => {
+  const shimmer = useRef(new Animated.Value(0)).current;
+
+  useEffect(() => {
+    Animated.loop(
+      Animated.timing(shimmer, {
+        toValue: 1, duration: 1500,
+        easing: Easing.inOut(Easing.ease), useNativeDriver: true,
+      })
+    ).start();
+  }, []);
+
+  const translateX = shimmer.interpolate({
+    inputRange: [0, 1], outputRange: [-200, 200],
+  });
+
+  return (
+    <View style={[styles.bone, style]}>
+      <Animated.View style={[styles.shimmer, { transform: [{ translateX }] }]} />
+    </View>
+  );
+};
+
+const CardShimmer = () => (
+  <View style={styles.container}>
+    <ShimmerBone style={styles.image} />
+    <ShimmerBone style={styles.title} />
+    <ShimmerBone style={styles.subtitle} />
+    <View style={styles.actions}>
+      <ShimmerBone style={styles.btn} />
+      <ShimmerBone style={styles.btn} />
+    </View>
+  </View>
+);
+
+const styles = StyleSheet.create({
+  container: { gap: 12, padding: 16 },
+  bone: { backgroundColor: '#e8e8e8', borderRadius: 6, overflow: 'hidden' },
+  shimmer: {
+    ...StyleSheet.absoluteFillObject,
+    backgroundColor: 'rgba(255,255,255,0.4)',
+    width: 100,
+  },
+  image: { width: '100%', height: 140, borderRadius: 12 },
+  title: { width: '70%', height: 14 },
+  subtitle: { width: '50%', height: 10 },
+  actions: { flexDirection: 'row', gap: 10, marginTop: 4 },
+  btn: { width: 60, height: 28, borderRadius: 14 },
+});
+
+export default CardShimmer;`,
+
+  'shimmer-text': `import React, { useEffect, useRef } from 'react';
+import { View, Animated, StyleSheet, Easing } from 'react-native';
+
+const ShimmerBone = ({ style }) => {
+  const shimmer = useRef(new Animated.Value(0)).current;
+
+  useEffect(() => {
+    Animated.loop(
+      Animated.timing(shimmer, {
+        toValue: 1, duration: 1500,
+        easing: Easing.inOut(Easing.ease), useNativeDriver: true,
+      })
+    ).start();
+  }, []);
+
+  const translateX = shimmer.interpolate({
+    inputRange: [0, 1], outputRange: [-200, 200],
+  });
+
+  return (
+    <View style={[styles.bone, style]}>
+      <Animated.View style={[styles.shimmer, { transform: [{ translateX }] }]} />
+    </View>
+  );
+};
+
+const TextBlockShimmer = () => (
+  <View style={styles.container}>
+    <ShimmerBone style={styles.title} />
+    <ShimmerBone style={[styles.line, { width: '100%' }]} />
+    <ShimmerBone style={[styles.line, { width: '95%' }]} />
+    <ShimmerBone style={[styles.line, { width: '88%' }]} />
+    <ShimmerBone style={[styles.line, { width: '100%' }]} />
+    <ShimmerBone style={[styles.line, { width: '72%' }]} />
+  </View>
+);
+
+const styles = StyleSheet.create({
+  container: { gap: 10, padding: 16 },
+  bone: { backgroundColor: '#e8e8e8', borderRadius: 4, overflow: 'hidden' },
+  shimmer: {
+    ...StyleSheet.absoluteFillObject,
+    backgroundColor: 'rgba(255,255,255,0.4)',
+    width: 100,
+  },
+  title: { width: '55%', height: 16, marginBottom: 4 },
+  line: { height: 11 },
+});
+
+export default TextBlockShimmer;`,
+
+  'shimmer-profile': `import React, { useEffect, useRef } from 'react';
+import { View, Animated, StyleSheet, Easing } from 'react-native';
+
+const ShimmerBone = ({ style }) => {
+  const shimmer = useRef(new Animated.Value(0)).current;
+
+  useEffect(() => {
+    Animated.loop(
+      Animated.timing(shimmer, {
+        toValue: 1, duration: 1500,
+        easing: Easing.inOut(Easing.ease), useNativeDriver: true,
+      })
+    ).start();
+  }, []);
+
+  const translateX = shimmer.interpolate({
+    inputRange: [0, 1], outputRange: [-200, 200],
+  });
+
+  return (
+    <View style={[styles.bone, style]}>
+      <Animated.View style={[styles.shimmer, { transform: [{ translateX }] }]} />
+    </View>
+  );
+};
+
+const ProfileShimmer = () => (
+  <View style={styles.container}>
+    <ShimmerBone style={styles.avatar} />
+    <ShimmerBone style={styles.name} />
+    <ShimmerBone style={styles.bio1} />
+    <ShimmerBone style={styles.bio2} />
+    <View style={styles.stats}>
+      {[0, 1, 2].map(i => (
+        <View key={i} style={styles.stat}>
+          <ShimmerBone style={styles.statNum} />
+          <ShimmerBone style={styles.statLabel} />
+        </View>
+      ))}
+    </View>
+  </View>
+);
+
+const styles = StyleSheet.create({
+  container: { alignItems: 'center', gap: 14, padding: 16 },
+  bone: { backgroundColor: '#e8e8e8', overflow: 'hidden' },
+  shimmer: {
+    ...StyleSheet.absoluteFillObject,
+    backgroundColor: 'rgba(255,255,255,0.4)',
+    width: 100,
+  },
+  avatar: { width: 72, height: 72, borderRadius: 36 },
+  name: { width: 120, height: 16, borderRadius: 4 },
+  bio1: { width: 180, height: 10, borderRadius: 4 },
+  bio2: { width: 140, height: 10, borderRadius: 4 },
+  stats: { flexDirection: 'row', gap: 24, marginTop: 4 },
+  stat: { alignItems: 'center', gap: 6 },
+  statNum: { width: 36, height: 14, borderRadius: 4 },
+  statLabel: { width: 48, height: 9, borderRadius: 4 },
+});
+
+export default ProfileShimmer;`,
+
+  'shimmer-feed': `import React, { useEffect, useRef } from 'react';
+import { View, Animated, StyleSheet, Easing } from 'react-native';
+
+const ShimmerBone = ({ style }) => {
+  const shimmer = useRef(new Animated.Value(0)).current;
+
+  useEffect(() => {
+    Animated.loop(
+      Animated.timing(shimmer, {
+        toValue: 1, duration: 1500,
+        easing: Easing.inOut(Easing.ease), useNativeDriver: true,
+      })
+    ).start();
+  }, []);
+
+  const translateX = shimmer.interpolate({
+    inputRange: [0, 1], outputRange: [-200, 200],
+  });
+
+  return (
+    <View style={[styles.bone, style]}>
+      <Animated.View style={[styles.shimmer, { transform: [{ translateX }] }]} />
+    </View>
+  );
+};
+
+const FeedListShimmer = ({ itemCount = 4 }) => (
+  <View style={styles.container}>
+    {Array.from({ length: itemCount }).map((_, i) => (
+      <View key={i}>
+        <View style={styles.row}>
+          <ShimmerBone style={styles.avatar} />
+          <View style={styles.lines}>
+            <ShimmerBone style={styles.line1} />
+            <ShimmerBone style={styles.line2} />
+          </View>
+        </View>
+        {i < itemCount - 1 && <View style={styles.divider} />}
+      </View>
+    ))}
+  </View>
+);
+
+const styles = StyleSheet.create({
+  container: { gap: 16, padding: 16 },
+  bone: { backgroundColor: '#e8e8e8', overflow: 'hidden' },
+  shimmer: {
+    ...StyleSheet.absoluteFillObject,
+    backgroundColor: 'rgba(255,255,255,0.4)',
+    width: 100,
+  },
+  row: { flexDirection: 'row', gap: 12, alignItems: 'flex-start' },
+  avatar: { width: 40, height: 40, borderRadius: 20 },
+  lines: { flex: 1, gap: 8, paddingTop: 2 },
+  line1: { width: '75%', height: 12, borderRadius: 4 },
+  line2: { width: '55%', height: 10, borderRadius: 4 },
+  divider: { height: 1, backgroundColor: '#f0f0f0', marginTop: 16 },
+});
+
+export default FeedListShimmer;`,
 };
 
 // ── State ──
@@ -1280,24 +1892,7 @@ swatches.forEach(swatch => {
 function applyTheme() {
   phoneScreen.style.background = activeBg;
   // Recolor all loader elements inside the phone
-  const targets = phoneScreen.querySelectorAll(
-    '.pulsing-dots span, .orbiting-center, .orbiting-dot, .circular-loader, .bouncing-dots span, .spinner-ring, .breathing-circle, .wave-bars span, .rotating-square'
-  );
-  targets.forEach(el => {
-    if (el.classList.contains('circular-loader')) {
-      el.style.borderTopColor = activeFg;
-      // Keep the track lighter
-      const isDark = isColorDark(activeBg);
-      el.style.borderColor = isDark ? 'rgba(255,255,255,0.15)' : '#e0e0e0';
-      el.style.borderTopColor = activeFg;
-    } else if (el.classList.contains('spinner-ring')) {
-      el.style.borderTopColor = activeFg;
-      el.style.borderRightColor = activeFg;
-      el.style.borderBottomColor = activeFg;
-    } else {
-      el.style.background = activeFg;
-    }
-  });
+  recolorElement(phoneScreen);
   // Contextual UI colors
   const isDark = isColorDark(activeBg);
   document.querySelectorAll('.ctx-title').forEach(el => el.style.color = isDark ? '#eee' : '#111');
@@ -1331,12 +1926,12 @@ function updateCtxLoader() {
 }
 
 function recolorElement(root) {
+  const isDark = isColorDark(activeBg);
   const targets = root.querySelectorAll(
     '.pulsing-dots span, .orbiting-center, .orbiting-dot, .circular-loader, .bouncing-dots span, .spinner-ring, .breathing-circle, .wave-bars span, .rotating-square'
   );
   targets.forEach(el => {
     if (el.classList.contains('circular-loader')) {
-      const isDark = isColorDark(activeBg);
       el.style.borderColor = isDark ? 'rgba(255,255,255,0.15)' : '#e0e0e0';
       el.style.borderTopColor = activeFg;
     } else if (el.classList.contains('spinner-ring')) {
@@ -1346,6 +1941,17 @@ function recolorElement(root) {
     } else {
       el.style.background = activeFg;
     }
+  });
+  // Shimmer bones
+  const boneBase = isDark ? 'rgba(255,255,255,0.08)' : '#e8e8e8';
+  const boneHighlight = isDark ? 'rgba(255,255,255,0.15)' : '#f5f5f5';
+  root.querySelectorAll('.shimmer-bone').forEach(el => {
+    el.style.background = `linear-gradient(90deg, ${boneBase} 25%, ${boneHighlight} 50%, ${boneBase} 75%)`;
+    el.style.backgroundSize = '200% 100%';
+    el.style.animation = 'shimmerSweep 1.5s ease-in-out infinite';
+  });
+  root.querySelectorAll('.shimmer-feed-divider').forEach(el => {
+    el.style.background = isDark ? 'rgba(255,255,255,0.06)' : '#f0f0f0';
   });
 }
 
@@ -1383,7 +1989,7 @@ copyBtn.addEventListener('click', async () => {
 
 function resetCopyBtn() {
   copyBtn.classList.remove('copied');
-  copyLabel.textContent = 'Copy React Native Code';
+  copyLabel.textContent = 'Copy RN Code';
 }
 
 // Init
