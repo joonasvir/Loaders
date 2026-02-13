@@ -506,37 +506,52 @@ body {
   background: conic-gradient(
     from 0deg,
     transparent 0%,
-    transparent 55%,
-    hsl(210, 100%, 10%) 62%,
-    hsl(210, 80%, 45%) 80%,
-    hsl(210, 90%, 72%) 92%,
+    transparent 50%,
+    hsl(210, 100%, 15%) 58%,
+    hsl(210, 90%, 50%) 75%,
+    hsl(210, 95%, 72%) 88%,
     white 100%
   );
-  mask: radial-gradient(transparent 83%, white 85%);
-  -webkit-mask: radial-gradient(transparent 83%, white 85%);
+  mask: radial-gradient(
+    circle,
+    transparent 0%,
+    transparent 68%,
+    white 72%,
+    white 92%,
+    transparent 96%
+  );
+  -webkit-mask: radial-gradient(
+    circle,
+    transparent 0%,
+    transparent 68%,
+    white 72%,
+    white 92%,
+    transparent 96%
+  );
 }
 
 /* The glowing dot at the leading edge (top center) */
 .glow-ring-dot {
   position: absolute;
-  top: 1px;
+  top: 4px;
   left: 50%;
   transform: translateX(-50%);
   width: 8px;
   height: 8px;
   background: white;
   border-radius: 50%;
+  z-index: 1;
 }
 
 /* Soft glow behind the dot */
 .glow-ring-dot::before {
   content: "";
   position: absolute;
-  inset: -6px;
+  inset: -8px;
   border-radius: 50%;
   background: white;
-  filter: blur(8px);
-  opacity: 0.9;
+  filter: blur(10px);
+  opacity: 0.95;
 }
 
 @keyframes glowSpin {
