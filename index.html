@@ -2057,14 +2057,70 @@ function isColorDark(hex) {
   return (r * 299 + g * 587 + b * 114) / 1000 < 128;
 }
 
+// Contextual shimmer templates — these replace the card content
+// to show shimmer bones that match the context naturally
+const ctxShimmerTemplates = {
+  'shimmer-card': `
+    <div class="shimmer-bone" style="width:100%;height:80px;border-radius:10px;margin-bottom:10px"></div>
+    <div class="shimmer-bone" style="width:65%;height:11px;margin-bottom:8px"></div>
+    <div class="shimmer-bone" style="width:45%;height:9px"></div>`,
+  'shimmer-text': `
+    <div class="shimmer-bone" style="width:50%;height:12px;margin-bottom:10px"></div>
+    <div class="shimmer-bone" style="width:100%;height:9px;margin-bottom:6px"></div>
+    <div class="shimmer-bone" style="width:92%;height:9px;margin-bottom:6px"></div>
+    <div class="shimmer-bone" style="width:80%;height:9px;margin-bottom:6px"></div>
+    <div class="shimmer-bone" style="width:100%;height:9px;margin-bottom:6px"></div>
+    <div class="shimmer-bone" style="width:60%;height:9px"></div>`,
+  'shimmer-profile': `
+    <div style="display:flex;flex-direction:column;align-items:center;gap:10px">
+      <div class="shimmer-bone" style="width:48px;height:48px;border-radius:50%"></div>
+      <div class="shimmer-bone" style="width:80px;height:11px"></div>
+      <div class="shimmer-bone" style="width:120px;height:8px"></div>
+    </div>`,
+  'shimmer-feed': `
+    <div style="display:flex;gap:10px;align-items:center;margin-bottom:12px">
+      <div class="shimmer-bone" style="width:28px;height:28px;border-radius:50%;flex-shrink:0"></div>
+      <div style="flex:1;display:flex;flex-direction:column;gap:6px">
+        <div class="shimmer-bone" style="width:70%;height:9px"></div>
+        <div class="shimmer-bone" style="width:50%;height:8px"></div>
+      </div>
+    </div>
+    <div style="display:flex;gap:10px;align-items:center">
+      <div class="shimmer-bone" style="width:28px;height:28px;border-radius:50%;flex-shrink:0"></div>
+      <div style="flex:1;display:flex;flex-direction:column;gap:6px">
+        <div class="shimmer-bone" style="width:60%;height:9px"></div>
+        <div class="shimmer-bone" style="width:45%;height:8px"></div>
+      </div>
+    </div>`,
+};
+
+const ctxCard = document.querySelector('.ctx-card');
+const ctxCardTitle = document.querySelector('.ctx-card-title');
+const ctxCardSubtitle = document.querySelector('.ctx-card-subtitle');
+const ctxCardOriginalHTML = ctxCard.innerHTML;
+
 function updateCtxLoader() {
+  const isShimmer = activeLoader.startsWith('shimmer-');
   ctxLoaderArea.innerHTML = '';
-  const src = document.querySelector('#loader-' + activeLoader + ' > *');
-  if (src) {
-    const clone = src.cloneNode(true);
-    ctxLoaderArea.appendChild(clone);
-    // Apply current theme colors to the clone
+
+  if (isShimmer) {
+    // Replace the card content with context-appropriate shimmer bones
+    ctxCardTitle.style.display = 'none';
+    ctxCardSubtitle.style.display = 'none';
+    ctxLoaderArea.style.height = 'auto';
+    ctxLoaderArea.innerHTML = ctxShimmerTemplates[activeLoader] || '';
     recolorElement(ctxLoaderArea);
+  } else {
+    // Restore normal card content and clone the loader
+    ctxCardTitle.style.display = '';
+    ctxCardSubtitle.style.display = '';
+    ctxLoaderArea.style.height = '64px';
+    const src = document.querySelector('#loader-' + activeLoader + ' > *');
+    if (src) {
+      const clone = src.cloneNode(true);
+      ctxLoaderArea.appendChild(clone);
+      recolorElement(ctxLoaderArea);
+    }
   }
 }
 
